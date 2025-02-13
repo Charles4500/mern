@@ -66,9 +66,10 @@ const deleteProduct = async (req, res) => {
 
     const product = await Product.findByIdAndDelete(id);
 
-    //Checking if the product exists in our database before deletint it
+    //Checking if the product exists in our database before deleting it
+    //!Found this error -->  Cannot set headers after they are sent to the client
     if (!product) {
-      res.status(404).json({ message: 'Product does not exist' });
+      res.status(404).send({ error: 'Product does not exist' });
     }
 
     res.status(200).json({ message: 'Product deleted successfully' });
