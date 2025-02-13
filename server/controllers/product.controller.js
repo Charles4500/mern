@@ -17,5 +17,18 @@ const createProduct = async (req, res) => {
   }
 };
 
+//Getting a single product
+const getProduct = async (req, res) => {
+  try {
+    //Getting a sinle product by its id
+    const { id } = req.params;
+
+    const product = await Product.findById(id);
+    res.status(200).json(product);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 //Exporting the endpoints
-export { createProduct };
+export { createProduct,getProduct };
