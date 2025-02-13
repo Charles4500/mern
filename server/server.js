@@ -9,10 +9,12 @@ import router from './routes/product.route.js';
 dotenv.config();
 
 const app = express();
+
 //Using the middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+//The products API
 const productRouter = router;
 
 app.use('/products', productRouter);

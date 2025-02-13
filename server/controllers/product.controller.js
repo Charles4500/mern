@@ -40,5 +40,42 @@ const getProducts = async (req, res) => {
   }
 };
 
+//Updating products in our database
+const updateProduct = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const product = await Product.findByIdAndUpdate(id, req.body);
+
+    //Checking if the product exists in our database
+    if (!product) {
+      return res.status(404).json({ message: 'Product does not exist' });
+    }
+
+    const updatedProduct = await Product.findById(id);
+    res.status(200).json(updatedProduct);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+//Deleting a product
+const deleteProduct = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const product = await Product.findByIdAndDelete(id);
+
+    //Checking if the product exists in our database before deletint it
+    if (!product) {
+      res.status(404).json({ message: 'Product does not exist' });
+    }
+
+    res.status(200).json({ message: 'Product deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 //Exporting the endpoints
-export { createProduct, getProduct, getProducts };
+export { createProduct, getProduct, getProducts, updateProduct, deleteProduct };
